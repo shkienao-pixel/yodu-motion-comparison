@@ -4,7 +4,7 @@
 
 | 方案 | 效果 | 单页入口 |
 | --- | --- | --- |
-| A | 紫色双弧光 | `/a/` |
+| A | React Bits Color Bends 原版双弧光 | `/a/` |
 | B | 淡紫弥散柔光 | `/b/` |
 | C | 全屏等距栅格扫描 | `/c/` |
 | D | 等距水平 Token 流动 | `/d/` |
@@ -60,11 +60,16 @@ tests/check-startup-flow.cjs  启动逻辑回归检查
 
 ```sh
 node tests/check-startup-flow.cjs
-node tests/check-arc-background.cjs
 ```
 
-或运行 `npm test`。检查覆盖正常完成、慢网、离线、失败重试、40 秒超时、暂停恢复、旧请求隔离以及质量阈值；双弧背景检查还覆盖重复状态通知下的持续流动、暂停恢复和资源释放。
+或运行 `npm test`。检查覆盖正常完成、慢网、离线、失败重试、40 秒超时、暂停恢复、旧请求隔离以及质量阈值。
 
-## 许可证与公开版本说明
+## A 版原始实现与许可证
 
-[MIT](LICENSE)。公开版 A 背景使用独立编写的 Canvas 2D 双弧实现，对照原版校正了双弧构图、紫色光晕和流动幅度；它仍是独立实现，与本地旧版的曲线轨迹有所不同。原受限制的 React Bits 组件、适配 shader 与相关预览图片未包含在本仓库中。B/C/D 背景及共享启动流程沿用原演示。
+A 版已恢复为本地最初使用的 **React Bits Color Bends** 实现，包括原背景脚本、fragment shader、样式和原始组件备份。仅更新 HTML 中的资源版本参数以刷新浏览器缓存；背景代码与本地原文件逐字节一致。
+
+- 作者：David Haz / React Bits
+- 来源：<https://reactbits.dev/backgrounds/color-bends>
+- 原始 JSX、来源说明及原许可证：[`a/vendor/react-bits/`](a/vendor/react-bits/)
+- A 版相关第三方实现遵循其原始 **MIT + Commons Clause** 许可证；没有将其重新授权为纯 MIT。
+- 本项目其余自有代码采用 [MIT](LICENSE)。具体范围见 [LICENSES.md](LICENSES.md)。

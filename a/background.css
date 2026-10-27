@@ -1,14 +1,1 @@
-.purple-arc-background {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-  background: #fff;
-}
-
-.purple-arc-background canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
+.color-bends-layer{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}.color-bends-layer canvas{display:block;width:100%;height:100%}.screen-a .alternative-background{background:radial-gradient(ellipse at 0 20%,#8d41c54d,transparent 50%),radial-gradient(ellipse at 100% 85%,#9945dc4d,transparent 50%)}.screen-a[data-bends-ready="true"] .alternative-background{display:none}
