@@ -22,44 +22,63 @@
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
     let width = 1, height = 1, frame = 0, previous = 0, painted = 0, elapsed = 0;
     let disposed = false;
+    let lastPaused = surface.dataset.paused === 'true';
 
-    function curve(which, drift) {
+    function curve(which) {
+      // Independent cubic geometry: two opposed ribbons sweep around the content.
+      const sweep = (1 - Math.cos(elapsed * Math.PI / 10)) / 2;
+      const bend = Math.sin(elapsed * Math.PI / 8) * .035;
       context.beginPath();
       if (which === 0) {
-        context.moveTo(width * (.59 + drift), height * -.09);
+        context.moveTo(width * (.40 + .36 * sweep), height * -.09);
         context.bezierCurveTo(
-          width * (.55 + drift), height * .20,
-          width * (.50 + drift), height * .44,
-          width * -.15, height * .60
+          width * (.43 + .30 * sweep), height * (.17 + bend),
+          width * (.35 + .23 * sweep), height * (.35 + .12 * sweep),
+          width * -.14, height * (.49 + .22 * sweep)
         );
       } else {
-        context.moveTo(width * 1.13, height * (.48 + drift));
+        context.moveTo(width * 1.14, height * (.36 + .22 * sweep));
         context.bezierCurveTo(
-          width * (.63 - drift), height * .51,
-          width * (.45 - drift), height * .73,
-          width * (.42 - drift), height * 1.12
+          width * (.59 + .19 * sweep), height * (.39 + .17 * sweep),
+          width * (.36 + .22 * sweep), height * (.66 + bend),
+          width * (.16 + .48 * sweep), height * 1.12
         );
       }
     }
 
     function paint() {
       context.clearRect(0, 0, width, height);
-      const drift = Math.sin(elapsed * Math.PI / 12) * .012;
-      const glow = 1 + Math.sin(elapsed * Math.PI / 9) * .08;
-      // Wide faint halo, soft body, then a narrow luminous center.
+      const breath = 1 + Math.sin(elapsed * Math.PI / 9) * .06;
+      const swell = Math.sin(elapsed * Math.PI / 10) ** 2;
+      const sweep = (1 - Math.cos(elapsed * Math.PI / 10)) / 2;
+      // Broad translucent light surrounds the richer, softly blurred center.
       const strokes = [
-        [.17, .045, .09],
-        [.085, .024, .14],
-        [.034, .010, .30],
-        [.013, .005, .27]
+        [.23, .062, .055],
+        [.11, .031, .16],
+        [.044, .014, .43],
+        [.020, .006, .53]
       ];
       context.lineCap = 'round';
       for (let arc = 0; arc < 2; arc++) {
         for (const [weight, blur, opacity] of strokes) {
-          context.lineWidth = width * weight;
+          const tint = context.createLinearGradient(0, 0, 0, height);
+          const rgba = alpha => `rgba(161, 67, 231, ${opacity * alpha * breath})`;
+          if (arc === 0) {
+            tint.addColorStop(0, rgba(.58));
+            tint.addColorStop(.25, rgba(.96));
+            tint.addColorStop(.48, rgba(.84));
+            tint.addColorStop(1, rgba(.12));
+          } else {
+            tint.addColorStop(0, rgba(.10));
+            tint.addColorStop(.42, rgba(.95));
+            tint.addColorStop(.62, rgba(.94));
+            tint.addColorStop(1, rgba(.16 + .55 * sweep));
+          }
+          const widthGain = weight < .03 ? 1 + 2 * swell : weight < .06 ? 1 + swell : 1 + .45 * swell;
+          context.lineWidth = width * weight * widthGain;
           context.filter = `blur(${width * blur}px)`;
-          context.strokeStyle = `rgba(167, 76, 232, ${opacity * glow})`;
-          curve(arc, arc ? -drift : drift);
+          context.strokeStyle = tint;
+          curve(arc);
           context.stroke();
         }
       }
@@ -128,7 +147,13 @@
     const resizeObserver = new ResizeObserver(resize);
     const stateObserver = new MutationObserver(records => {
       if (!surface.isConnected) cleanup();
-      else if (records.some(record => record.type === 'attributes')) resume();
+      else if (records.some(record => record.type === 'attributes')) {
+        const paused = surface.dataset.paused === 'true';
+        if (paused !== lastPaused) {
+          lastPaused = paused;
+          resume();
+        }
+      }
     });
     instances.set(surface, cleanup);
     resizeObserver.observe(surface);

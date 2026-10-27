@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "start": "python3 -m http.server 43182 --bind 127.0.0.1",
-    "test": "node tests/check-startup-flow.cjs"
+    "test": "node tests/check-startup-flow.cjs && node tests/check-arc-background.cjs"
   },
-  "engines": { "node": ">=18" }
+  "engines": {
+    "node": ">=18"
+  }
 }

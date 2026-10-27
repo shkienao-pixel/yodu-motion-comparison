@@ -9,6 +9,16 @@
 | C | 全屏等距栅格扫描 | `/c/` |
 | D | 等距水平 Token 流动 | `/d/` |
 
+## 在线预览
+
+- [四版对比首页](https://yodu-motion-preview.shkienao.chatgpt.site/)
+- [A · 双弧光](https://yodu-motion-preview.shkienao.chatgpt.site/a/)
+- [B · 柔光](https://yodu-motion-preview.shkienao.chatgpt.site/b/)
+- [C · 全屏扫描](https://yodu-motion-preview.shkienao.chatgpt.site/c/)
+- [D · Token 流动](https://yodu-motion-preview.shkienao.chatgpt.site/d/)
+
+以上链接可公开分享，无需登录。
+
 ## 本地运行
 
 安装 Python 3，然后在项目目录执行：
@@ -50,10 +60,11 @@ tests/check-startup-flow.cjs  启动逻辑回归检查
 
 ```sh
 node tests/check-startup-flow.cjs
+node tests/check-arc-background.cjs
 ```
 
-或运行 `npm test`。检查覆盖正常完成、慢网、离线、失败重试、40 秒超时、暂停恢复、旧请求隔离以及质量阈值。
+或运行 `npm test`。检查覆盖正常完成、慢网、离线、失败重试、40 秒超时、暂停恢复、旧请求隔离以及质量阈值；双弧背景检查还覆盖重复状态通知下的持续流动、暂停恢复和资源释放。
 
 ## 许可证与公开版本说明
 
-[MIT](LICENSE)。公开版 A 背景使用独立编写的 Canvas 2D 双弧实现，保留紫色双弧视觉方向；它与本地旧版的曲线轨迹有所不同。原受限制的 React Bits 组件、适配 shader 与相关预览图片未包含在本仓库中。B/C/D 背景及共享启动流程沿用原演示。
+[MIT](LICENSE)。公开版 A 背景使用独立编写的 Canvas 2D 双弧实现，对照原版校正了双弧构图、紫色光晕和流动幅度；它仍是独立实现，与本地旧版的曲线轨迹有所不同。原受限制的 React Bits 组件、适配 shader 与相关预览图片未包含在本仓库中。B/C/D 背景及共享启动流程沿用原演示。
