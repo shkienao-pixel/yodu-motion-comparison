@@ -1,0 +1,28 @@
+/* Four quality quarters. Root owns the measured/demo value and needle position. */
+.network-gauge{position:absolute;top:98px;left:50%;width:240px;height:auto;max-width:100%;margin:0;transform:translateX(-50%);pointer-events:none;text-align:center}
+.network-gauge[hidden]{display:none!important}
+.network-dial{display:block;width:100%;height:auto;overflow:visible}
+.network-dial path{vector-effect:non-scaling-stroke}
+.network-quality-underlay{stroke:#ffffffdf;stroke-width:6;stroke-linecap:round}
+.network-quality-track{stroke:#d7cbe1;stroke-width:3.5;stroke-linecap:round}
+.network-quality-fill{stroke:#9770b6;stroke-width:4;stroke-linecap:butt;animation:network-quality-breathe 1.5s ease-in-out infinite}
+.network-quality-tick{stroke:#aa92be;stroke-width:1;stroke-linecap:round}
+.network-quality-number{fill:#9a83ae;stroke:#ffffffdb;stroke-width:2.4px;paint-order:stroke;stroke-linejoin:round;font:400 9px/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;font-variant-numeric:tabular-nums}
+.network-needle{transform-box:view-box;transform-origin:120px 120px;transform:rotate(-90deg);animation:none;transition:none}
+.network-needle-underlay{stroke:#fffffff0;stroke-width:4.6;stroke-linecap:round}
+.network-needle-line{stroke:#8054a0;stroke-width:2.2;stroke-linecap:round}
+.network-dial-hub{fill:#fff;stroke:#9b7ab2;stroke-width:1.5}
+.network-dial-hub-dot{fill:#8054a0}
+.network-reading{display:flex;justify-content:center;align-items:baseline;gap:4px;margin-top:2px;color:#805d9a;font-variant-numeric:tabular-nums}
+.network-speed-value{font-size:20px;line-height:26px;font-weight:500;letter-spacing:.1px}
+.network-speed-unit{font-size:11px;line-height:18px;font-weight:400;color:#9b87aa}
+.network-quality-label{margin:4px 0 0;font-size:10px;line-height:16px;font-weight:400;color:#a08aaf}
+@keyframes network-quality-breathe{0%,100%{opacity:.72}50%{opacity:1}}
+.network-gauge[data-quality="poor"] .network-quality-fill{stroke:#b47b8c}
+.network-gauge[data-quality="poor"] .network-needle-line,.network-gauge[data-quality="poor"] .network-dial-hub-dot{stroke:#9e687c;fill:#9e687c}
+.network-gauge[data-quality="poor"] .network-reading{color:#9e687c}
+.network-gauge[data-quality="poor"] .network-quality-label{color:#a27685}
+.alternative-screen[data-paused="true"] .network-gauge *{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){.network-quality-fill{animation:none;opacity:1}}
+@media(prefers-contrast:more){.network-quality-track{stroke:#bea9ce}.network-quality-fill{stroke:#7e549b}.network-quality-tick{stroke:#8f70a5}.network-quality-number,.network-quality-label{fill:#80628f;color:#80628f}.network-reading{color:#71448b}}
+.network-speed-label{font-size:10px;font-weight:400;color:#9b88a9;margin-right:7px}

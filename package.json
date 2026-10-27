@@ -1,0 +1,11 @@
+{
+  "name": "yodu-motion-comparison",
+  "version": "1.0.0",
+  "description": "Four mobile startup animation demos with shared network and progress flows",
+  "license": "MIT",
+  "scripts": {
+    "start": "python3 -m http.server 43182 --bind 127.0.0.1",
+    "test": "node tests/check-startup-flow.cjs"
+  },
+  "engines": { "node": ">=18" }
+}

@@ -1,0 +1,11 @@
+/* Full-surface regularity: fixed 24px spacing and one uniform scanning front. */
+.alternative-background{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.tech-field{position:absolute;inset:0;overflow:hidden;mask-image:radial-gradient(ellipse 180px 140px at 50% 48%,#0000 60%,#0000000f 73%,#0006 88%,#000 100%);-webkit-mask-image:radial-gradient(ellipse 180px 140px at 50% 48%,#0000 60%,#0000000f 73%,#0006 88%,#000 100%)}
+.tech-grid{position:absolute;inset:0;background-image:linear-gradient(90deg,#b7a9c366 1px,transparent 1px),linear-gradient(#b7a9c366 1px,transparent 1px);background-size:24px 24px;background-position:3px 6px}
+.tech-scan{position:absolute;left:0;right:0;top:-24px;height:24px;background:linear-gradient(to bottom,#a38ab800,#a38ab80f);animation:tech-linear-scan 6.4s linear infinite;will-change:transform,opacity}
+.scan-line{position:absolute;left:0;right:0;bottom:0;height:1px;background:#9274aa99}
+@keyframes tech-linear-scan{0%{transform:translateY(0);opacity:0}6%{opacity:1}94%{opacity:1}100%{transform:translateY(var(--scan-distance,100vh));opacity:0}}
+.alternative-background[data-paused="true"] .tech-scan,.alternative-screen[data-paused="true"] .tech-scan{animation-play-state:paused!important}
+.alternative-background[data-reduced="true"] .tech-scan{display:none;animation:none;will-change:auto}
+@media(prefers-reduced-motion:reduce){.tech-scan{display:none;animation:none;will-change:auto}}
+@media(prefers-contrast:more){.tech-grid{background-image:linear-gradient(90deg,#a38bb680 1px,transparent 1px),linear-gradient(#a38bb680 1px,transparent 1px)}.scan-line{background:#77558fb3}}

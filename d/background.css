@@ -1,0 +1,13 @@
+/* Abstract token transport: one direction, one speed, a regular 34px lane pitch. */
+.alternative-background{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.token-field{display:block;width:100%;height:100%;overflow:hidden}
+.token-block{vector-effect:non-scaling-stroke;stroke-width:.6}
+.token-base{fill:#bea4d1;fill-opacity:.27}
+.token-accent{fill:#a181bc;fill-opacity:.53}
+.token-outline{fill:#e8def0;fill-opacity:.1;stroke:#bca5d0;stroke-opacity:.46}
+.token-strip{animation:token-transport 12s linear infinite;animation-delay:var(--token-phase,0s);will-change:transform}
+@keyframes token-transport{from{transform:translateX(-480px)}to{transform:translateX(0)}}
+.alternative-background[data-paused="true"] .token-strip,.alternative-screen[data-paused="true"] .token-strip{animation-play-state:paused!important}
+.alternative-background[data-reduced="true"] .token-strip{animation:none;transform:translateX(-120px);will-change:auto}
+@media(prefers-reduced-motion:reduce){.token-strip{animation:none;transform:translateX(-120px);will-change:auto}}
+@media(prefers-contrast:more){.token-base{fill-opacity:.34}.token-accent{fill:#8a659f;fill-opacity:.62}.token-outline{stroke-opacity:.6}}

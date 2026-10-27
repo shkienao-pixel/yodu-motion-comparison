@@ -1,2 +1,59 @@
-# yodu-motion-comparison
-YODU mobile startup animation demo: four visual styles, network checks, progress, timeout and retry.
+# YODU 四版启动动效
+
+无需构建、无需安装依赖的移动端启动流程演示。四个页面共用一套网络检测、进度、超时与重启逻辑，可在桌面并排比较，窄屏左右滑动。
+
+| 方案 | 效果 | 单页入口 |
+| --- | --- | --- |
+| A | 紫色双弧光 | `/a/` |
+| B | 淡紫弥散柔光 | `/b/` |
+| C | 全屏等距栅格扫描 | `/c/` |
+| D | 等距水平 Token 流动 | `/d/` |
+
+## 本地运行
+
+安装 Python 3，然后在项目目录执行：
+
+```sh
+python3 -m http.server 43182 --bind 127.0.0.1
+```
+
+浏览器打开 <http://127.0.0.1:43182/>。需要通过 HTTP 服务访问，直接双击 HTML 文件无法完成同源网络探测。
+
+也可在已安装 Node.js、npm 和 Python 3 的环境中运行 `npm start`。项目没有 npm 依赖，无需 `npm install`。
+
+## 演示行为
+
+- 前 5 秒检测网络，同源请求 `network-check.txt` 检查连接与响应延迟。
+- 网络通过后启动进度从 0% 开始；从点击启动起第 25 秒到达 90%，随后放缓，未就绪时最高 99%。
+- 默认演示就绪信号在第 38 秒返回；第 40 秒仍未就绪则显示启动超时。
+- 网络不佳或超时后点击“重启任务”，会重新发起网络检测。
+- 底部提供检测网络、网络良好、网络不佳、启动超时、启动完成五个场景入口，以及同步播放/暂停按钮。
+
+**网速、质量数值及任务就绪信号都是演示数据。** 正常样本为 32.6 Mbps / 100%，低质量样本为 0.8 Mbps / 18%。本项目没有实际测速带宽测量、AI 任务启动服务、第三方账号连接或业务执行能力。可在 `startup-flow.js` 的 `networkSample` 等配置处接入真实数据。
+
+验证参数可直接加在单页地址后，例如 `/a/?network=poor` 强制低质量网络，`/a/?startup=timeout` 演示真实 40 秒超时。
+
+## 代码结构
+
+```text
+index.html, comparison.*     四版对比与同步控制
+screen.js, screen.css        通用手机界面
+startup-flow.js              网络检测与启动状态控制
+network-gauge.*              网络检测表盘
+a/, b/, c/, d/               四种背景及独立页面
+tests/check-startup-flow.cjs  启动逻辑回归检查
+```
+
+## 检查
+
+安装 Node.js 18 或更新版本，运行：
+
+```sh
+node tests/check-startup-flow.cjs
+```
+
+或运行 `npm test`。检查覆盖正常完成、慢网、离线、失败重试、40 秒超时、暂停恢复、旧请求隔离以及质量阈值。
+
+## 许可证与公开版本说明
+
+[MIT](LICENSE)。公开版 A 背景使用独立编写的 Canvas 2D 双弧实现，保留紫色双弧视觉方向；它与本地旧版的曲线轨迹有所不同。原受限制的 React Bits 组件、适配 shader 与相关预览图片未包含在本仓库中。B/C/D 背景及共享启动流程沿用原演示。

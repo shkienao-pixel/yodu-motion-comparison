@@ -1,0 +1,14 @@
+/* Soft, abstract light. No symbol, object, orbit, particles or bright center. */
+.alternative-background{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.haze-field{position:absolute;inset:0;overflow:hidden}
+.haze-wash{position:absolute;display:block;pointer-events:none;will-change:transform,opacity}
+.haze-wash-upper{width:170%;height:76%;left:-54%;top:-39%;background:radial-gradient(ellipse at 48% 54%,#b99bdc66 0%,#d4bde92b 24%,#ece0f511 46%,#fff0 70%);animation:haze-upper-drift 18s ease-in-out infinite}
+.haze-wash-side{width:142%;height:96%;left:-90%;top:8%;background:radial-gradient(ellipse at 51% 49%,#b494d961 0%,#d2b9e82b 24%,#eadcf413 46%,#fff0 68%);animation:haze-side-drift 20s ease-in-out infinite;animation-delay:-7s}
+.haze-wash-lower{width:158%;height:98%;right:-76%;bottom:-30%;background:radial-gradient(ellipse at 50% 52%,#bb9adf70 0%,#d7c1ec2e 22%,#eee3f717 43%,#fff0 69%);animation:haze-lower-drift 19s ease-in-out infinite;animation-delay:-11s}
+@keyframes haze-upper-drift{0%,100%{transform:translate(-2%,-2%);opacity:.58}50%{transform:translate(6%,7%);opacity:.86}}
+@keyframes haze-side-drift{0%,100%{transform:translate(-3%,2%);opacity:.62}50%{transform:translate(9%,-4%);opacity:.84}}
+@keyframes haze-lower-drift{0%,100%{transform:translate(3%,3%);opacity:.62}50%{transform:translate(-8%,-7%);opacity:.9}}
+.alternative-background[data-paused="true"] .haze-wash,.alternative-screen[data-paused="true"] .haze-wash{animation-play-state:paused!important}
+.alternative-background[data-reduced="true"] .haze-wash{animation:none;transform:none;opacity:.7;will-change:auto}
+@media(prefers-reduced-motion:reduce){.haze-wash{animation:none;transform:none;opacity:.7;will-change:auto}}
+@media(prefers-contrast:more){.haze-wash{opacity:.35!important}}
